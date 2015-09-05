@@ -57,6 +57,11 @@ class DownloadAPI(Resource):
 	def get(self, contentID):
 		# Fetch resource from database and return 
 		file_location = 'deep.png'
+		# If the object had been serialized, use the following code and replace file_location with strIO
+		# strIO = StringIO.StringIO()
+  #   	strIO.write('Hello from Dan Jacob and Stephane Wirtel !')
+  #   	strIO.seek(0)
+
 		return send_file(file_location)
 
 
@@ -104,7 +109,11 @@ class UserAdvertsAPI(Resource):
 # Get user data like remaining budget, number of advertisements, location, etc
 class UserInfoAPI(Resource):
 
-	def get(self, userid):
+	parser = reqparse.RequestParser()
+	parser.add_argument('userid',type=str,required=True)
+
+	def get(self):
+		args = UserInfoAPI.parser.parse_args()
 		# Get data here
 		return {'remaining_budget': 500, 'num_adverts_active' : 10}
 
@@ -127,7 +136,7 @@ class AdvertApproximateCostAPI(Resource):
 
 
 api.add_resource(UserAPI,'/user')
-api.add_resource(UserInfoAPI, '/user/<string:userid>/info/')
+api.add_resource(UserInfoAPI, '/user/info')
 api.add_resource(UserAdvertsAPI,'/user/adverts')
 api.add_resource(UploadAPI, '/upload/<string:filetype>')
 api.add_resource(DownloadAPI, '/download/<string:contentID>')
