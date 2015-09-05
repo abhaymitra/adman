@@ -1,6 +1,6 @@
 from flask import Flask 
 from flask_restful import Resource, Api, reqparse
-from flask import request, abort
+from flask import request, abort, send_file
 from werkzeug import secure_filename
 
 app = Flask(__name__)
@@ -56,7 +56,8 @@ class DownloadAPI(Resource):
 
 	def get(self, contentID):
 		# Fetch resource from database and return 
-		return {'status' : 'success', 'payload': ''}
+		file_location = 'deep.png'
+		return send_file(file_location)
 
 
 class AdvertAPI(Resource):
