@@ -3,6 +3,8 @@ from flask_restful import Resource, Api, reqparse
 from flask import request, abort, send_file
 from werkzeug import secure_filename
 
+from tvapi import ServerPollAPI, ServerFetchAdvertsAPI
+
 app = Flask(__name__)
 api = Api(app)
 
@@ -134,7 +136,7 @@ class AdvertApproximateCostAPI(Resource):
 		# Calculate approximate cost of advertisement 
 		return {'num_hours' : 5}
 
-
+## API for clients
 api.add_resource(UserAPI,'/user')
 api.add_resource(UserInfoAPI, '/user/info')
 api.add_resource(UserAdvertsAPI,'/user/adverts')
@@ -142,6 +144,11 @@ api.add_resource(UploadAPI, '/upload/<string:filetype>')
 api.add_resource(DownloadAPI, '/download/<string:contentID>')
 api.add_resource(AdvertAPI, '/adverts')
 api.add_resource(AdvertApproximateCostAPI, '/advert/approx')
+
+
+## API for screens
+api.add_resource(ServerPollAPI, '/poll')
+api.add_resource(ServerFetchAdvertsAPI, '/fetch')
 
 
 if __name__ == '__main__':

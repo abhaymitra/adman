@@ -28,7 +28,7 @@ class ServerFetchAdvertsAPI(Resource):
 
 	parser = reqparse.RequestParser()
 	parser.add_argument('screenid',type=str,required=True)
-	parser.add_argument)('num_free_slots',type=int,required=True)
+	parser.add_argument('num_free_slots',type=int,required=True)
 
 	def get(self):
 		# Results from the scheduler should be maintained in a hash table indexed by screenid. 
