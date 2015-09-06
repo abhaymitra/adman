@@ -1,0 +1,176 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form class="form-horizontal" action="/user/adverts">
+  <fieldset>
+    <legend>Add New Advertisement</legend>
+    <div class="form-group">
+      <label for="inputTitle" class="col-lg-2 control-label"></label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputTitle" placeholder="Title">
+      </div>
+    </div>
+
+    <div class="form-group">
+    <label for="inputFile" class="col-lg-2 control-label"></label>
+    <div class="col-lg-5">
+    <span class="btn btn-default btn-file">
+    Browse Media <input type="file">
+	</span>
+    </div>
+    <div class="col-lg-5">
+	    <div class="radio">
+		  <label>
+		    <input type="radio" name="filetypeRadio" id="filetypeRadio1" value="video" checked="">
+		    Video
+		  </label>
+		  <label>
+            <input type="radio" name="filetypeRadio" id="filetypeRadio2" value="image">
+            Image
+          </label>
+
+		</div>
+
+    </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputNumPeople" class="col-lg-2 control-label"></label>
+      <div class="col-lg-10">
+        <input type="number" class="form-control" id="inputNumPeople" placeholder="Number of People to Reach">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="selectAge" class="col-lg-2 control-label"></label>
+      <div class="col-lg-10">
+
+        <select class="form-control" id="selectAge">
+          <option>17-22</option>
+          <option>22-30</option>
+          <option>30-45</option>
+          <option> &gt; 45</option>
+        </select>
+        <span class="help-block">Select the preferred age group of the viewers.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="selectIncome" class="col-lg-2 control-label"></label>
+      <div class="col-lg-10">
+        <select class="form-control" id="selectIncome">
+          <option> &lt; 4 LPA </option>
+          <option> 4-8 LPA</option>
+          <option> 8-20 LPA</option>
+          <option> &gt; 20 LPA </option>
+        </select>
+        <span class="help-block">Select the preferred income range of the viewers.</span>
+      </div>
+    </div>
+
+	<div class="form-group">
+	<label for="selectLocation" class="col-lg-2 control-label"></label>
+	<div class="col-lg-10">
+		  <input class="placepicker form-control" data-map-container-id="collapseOne"/>
+		  <div id="collapseOne" class="collapse">
+		<div class="placepicker-map thumbnail" style="height:400px"></div>
+		<br>
+		</div>
+
+
+		</div>
+	</div>
+
+    <div class="form-group">
+      <label for="inputRadius" class="col-lg-2 control-label"></label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputRadius" placeholder="Allowed Radius">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="selectType" class="col-lg-2 control-label"></label>
+      <div class="col-lg-10">
+        <select class="form-control" id="selectType">
+          <option> Normal </option>
+          <option> Premier </option>
+          <option> Jumbo </option>
+        </select>
+        <span class="help-block">Select the service tier.</span>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="reset" class="btn btn-default">Cancel</button>
+        <button type="submit" class="btn btn-primary" >Submit</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<!-- Script for posting form -->
+
+ <script type="text/javascript">
+     $(document).ready(function () {
+$("input#submit").click(function(){
+    $.ajax({
+        type: "POST",
+        url: "process.php", //process to mail
+        data: $('form.contact').serialize(),
+        success: function(msg){
+            $("#thanks").html(msg) //hide button and show thank you
+            $("#form-content").modal('hide'); //hide popup  
+        },
+        error: function(){
+            alert("failure");
+        }
+    });
+});
+});
+  </script>
+
+<!-- Script for posting form ends -->
+
+<!-- Script for place picker -->
+
+<script>
+  
+$(document).ready(function() {
+ 
+$(".placepicker").each(function() {
+ 
+// find map-element
+var target = this;
+var $collapse = $(this).parents('.form-group').next('.collapse');
+var $map = $collapse.find('.placepicker-map');
+ 
+// init placepicker
+var placepicker = $(this).placepicker({
+map: $map.get(0)
+}).data('placepicker');
+ 
+// reload map after collapse in
+$collapse.on('show.bs.collapse', function () {
+ 
+window.setTimeout(function() {
+placepicker.resizeMap();
+placepicker.reloadMap();
+if (!$(target).prop('value')) {
+placepicker.geoLocation();
+}
+ 
+}, 0);
+ 
+});
+ 
+});
+ 
+});
+ 
+</script>
+
+<!-- Script ends here -->
+
+{% endblock %}

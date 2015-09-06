@@ -37,8 +37,5 @@ class ServerFetchAdvertsAPI(Resource):
 
 
 
-api.add_resource(ServerPollAPI, '/poll')
-api.add_resource(ServerFetchAdvertsAPI, '/fetch')
-
 if __name__ == '__main__':
 	app.run(debug=True,port=5001)
